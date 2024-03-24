@@ -1,6 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client"; // Import createRoot from "react-dom/client" instead of "react-dom"
 import "./index.css";
+import "antd/dist/antd";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
