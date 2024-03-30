@@ -10,6 +10,7 @@ import Register from "./auth/Register";
 import Dashboard from "./user/Dashboard";
 import DashboardSeller from "./user/DashboardSeller";
 import NewHotel from "./hotels/NewHotel";
+import StripeCallback from "./stripe/StripeCallback";
 
 function App() {
   return (
@@ -17,10 +18,11 @@ function App() {
       <TopNav />
       <ToastContainer position="top-center" />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route exact path="/" element={<Home />} />
+        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/register" element={<Register />} />
         <Route
+          exact
           path="/dashboard"
           element={
             <PrivateRoute>
@@ -29,6 +31,7 @@ function App() {
           }
         />
         <Route
+          exact
           path="/dashboard/seller"
           element={
             <PrivateRoute>
@@ -37,10 +40,20 @@ function App() {
           }
         />
         <Route
+          exact
           path="/hotels/new"
           element={
             <PrivateRoute>
               <NewHotel />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          exact
+          path="/stripe/callback"
+          element={
+            <PrivateRoute>
+              <StripeCallback />
             </PrivateRoute>
           }
         />
