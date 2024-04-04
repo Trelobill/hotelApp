@@ -6,16 +6,15 @@ const dayjs = require("dayjs");
 
 const { Option } = Select;
 
-const HotelCreateForm = ({
+const HotelEditForm = ({
   values,
   setValues,
   handleChange,
   handleImageChange,
   handleSubmit,
-  setLocation,
   handleKeyPress,
 }) => {
-  const { title, content, price, from, to } = values;
+  const { title, content, location, price, bed, from, to } = values;
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
 
@@ -76,10 +75,11 @@ const HotelCreateForm = ({
           placeholder="Location"
           apiKey={process.env.REACT_APP_GOOGLEPLACES_API_KEY}
           onPlaceSelected={(place) => {
-            setLocation(place.formatted_address);
+            setValues({ ...values, location: place.formatted_address });
           }}
           style={{ height: "50px" }}
-          onChange={(e) => setLocation(e.target.value)}
+          onChange={(e) => setValues({ ...values, location: e.target.value })}
+          defaultValue={location}
           //prevent submit on enter select an autocomplete location
           onKeyDown={handleKeyPress}
         />
@@ -98,6 +98,7 @@ const HotelCreateForm = ({
           className="w-100 m-2"
           size="large"
           placeholder="Number Of Beds"
+          value={bed}
         >
           <Option key={1}>{1}</Option>
           <Option key={2}>{2}</Option>
@@ -137,4 +138,4 @@ const HotelCreateForm = ({
   );
 };
 
-export default HotelCreateForm;
+export default HotelEditForm;
