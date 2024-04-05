@@ -37,8 +37,8 @@ const Search = () => {
     // Remove the trailing '&' if it exists
     queryString = queryString.replace(/&$/, "");
     console.log(queryString);
-    navigate(`${queryString}`, { replace: true });
-    // navigate(0);
+    navigate(`${queryString}`);
+    navigate(0);
   };
 
   return (

@@ -12,6 +12,7 @@ const HotelEditForm = ({
   handleChange,
   handleImageChange,
   handleSubmit,
+  setLocation,
   handleKeyPress,
 }) => {
   const { title, content, location, price, bed, from, to } = values;
@@ -19,6 +20,8 @@ const HotelEditForm = ({
   const [toDate, setToDate] = useState(null);
 
   useEffect(() => {
+    // bug-fix 
+    setLocation(location);
     if (from) {
       const fromDateFormatted = dayjs(from, "YYYY-MM-DD");
       setFromDate(fromDateFormatted);
@@ -75,10 +78,10 @@ const HotelEditForm = ({
           placeholder="Location"
           apiKey={process.env.REACT_APP_GOOGLEPLACES_API_KEY}
           onPlaceSelected={(place) => {
-            setValues({ ...values, location: place.formatted_address });
+            setLocation(place.formatted_address);
           }}
           style={{ height: "50px" }}
-          onChange={(e) => setValues({ ...values, location: e.target.value })}
+          onChange={(e) => setLocation(e.target.value)}
           defaultValue={location}
           //prevent submit on enter select an autocomplete location
           onKeyDown={handleKeyPress}

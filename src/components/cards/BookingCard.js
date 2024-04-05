@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { currencyFormatter } from "../../actions/stripe";
 import { diffDays } from "../../actions/hotel";
-import { useNavigate } from "react-router-dom";
 import OrderModal from "../modals/OrderModal";
+import QRCode from "react-qr-code";
 
 const BookingCard = ({ hotel, session, orderedBy }) => {
-  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+  // const [data, setData] = useState('No result');
 
   return (
     <div className="card mb-3">
@@ -15,19 +15,19 @@ const BookingCard = ({ hotel, session, orderedBy }) => {
           {hotel.image && hotel.image.contentType ? (
             <img
               src={`${process.env.REACT_APP_API}/hotel/image/${hotel._id}`}
-              alt="default hotel image"
+              alt="default hotel"
               className="card-image img img-fluid"
               style={{ objectFit: "cover", width: "100%", height: "100%" }}
             />
           ) : (
             <img
               src="https://via.placeholder.com/900x500.png?text=MERN+Booking"
-              alt="default hotel image"
+              alt="default hotel"
               className="card-image img img-fluid"
             />
           )}
         </div>
-        <div className="col-md-8">
+        <div className="col-md-4">
           <div className="card-body">
             <h3 className="card-title">
               {hotel.title}{" "}
@@ -70,6 +70,18 @@ const BookingCard = ({ hotel, session, orderedBy }) => {
               </button>
             </div>
           </div>
+        </div>
+        <div
+          className="col-md-4"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <QRCode type="png" value={hotel._id} />
+
+          <div />
         </div>
       </div>
     </div>

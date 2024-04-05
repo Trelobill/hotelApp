@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { DatePicker, Select } from "antd";
 import { read, updateHotel } from "../actions/hotel";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import HotelEditForm from "../components/forms/HotelEditForm";
+import { useNavigate } from "react-router-dom";
 
 const EditHotel = () => {
   const { hotelId } = useParams();
@@ -26,8 +26,10 @@ const EditHotel = () => {
   const [preview, setPreview] = useState(
     "https://via.placeholder.com/100x100.png?text=PREVIEW"
   );
+  const [location, setLocation] = useState("");
   // destructuring variables from state
-  const { title, content, price, from, to, bed, location } = values;
+  const { title, content, price, from, to, bed } = values;
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadSellerHotel();
@@ -43,6 +45,24 @@ const EditHotel = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const requiredFields = {
+      title: "Title is required",
+      content: "Content is required",
+      location: "Location is required",
+      price: "Price is required",
+      bed: "Number of beds is required",
+      from: "From date is required",
+      to: "To date is required",
+    };
+
+    // Check if any required field is missing
+    for (const field in requiredFields) {
+      if (!eval(field)) {
+        toast.error(requiredFields[field]);
+        return;
+      }
+    }
+
     let hotelData = new FormData();
     hotelData.append("title", title);
     hotelData.append("content", content);
@@ -57,6 +77,9 @@ const EditHotel = () => {
       let res = await updateHotel(token, hotelData, hotelId);
       console.log("HOTEL UPDATE RES", res);
       toast.success(`${res.data.title} is updated`);
+      setTimeout(() => {
+        navigate("/dashboard/seller");
+      }, 1000);
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.err);
@@ -93,6 +116,7 @@ const EditHotel = () => {
               handleChange={handleChange}
               handleImageChange={handleImageChange}
               handleSubmit={handleSubmit}
+              setLocation={setLocation}
               handleKeyPress={handleKeyPress}
             />
           </div>

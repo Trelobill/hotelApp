@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { useSelector } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 import TopNav from "./components/TopNav";
 import PrivateRoute from "./components/PrivateRoute";
@@ -16,8 +17,10 @@ import ViewHotel from "./hotels/ViewHotel";
 import StripeSuccess from "./stripe/StripeSuccess";
 import StripeCancel from "./stripe/StripeCancel";
 import SearchResult from "./hotels/SearchResult";
+import Scanner from "./components/Scanner";
 
 function App() {
+  const { auth } = useSelector((state) => ({ ...state }));
   return (
     <BrowserRouter>
       <TopNav />
@@ -43,6 +46,19 @@ function App() {
               <Navigate to="/" replace />
             ) : (
               <Register />
+            )
+          }
+        />
+        <Route
+          exact
+          path="/qr-code"
+          element={
+            auth !== null && auth.user.stripe_account_id !== undefined ? (
+              <PrivateRoute>
+                <Scanner />
+              </PrivateRoute>
+            ) : (
+              <Navigate to="/" replace />
             )
           }
         />

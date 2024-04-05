@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 const TopNav = () => {
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => ({ ...state }));
-
   const navigate = useNavigate();
 
   const logout = () => {
@@ -19,6 +18,7 @@ const TopNav = () => {
 
   return (
     <div className="nav bg-light d-flex justify-content-between">
+      {/* <Scanner /> */}
       <Link className="nav-link" to="/">
         Home
       </Link>
@@ -26,6 +26,12 @@ const TopNav = () => {
       {auth !== null && (
         <Link className="nav-link" to="/dashboard">
           Dashboard
+        </Link>
+      )}
+
+      {auth !== null && auth.user.stripe_account_id !== undefined && (
+        <Link className="nav-link" to="/qr-code">
+          Scan QR Code
         </Link>
       )}
 
