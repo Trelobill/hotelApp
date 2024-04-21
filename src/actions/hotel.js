@@ -62,3 +62,6 @@ export const isAlreadyBooked = async (token, hotelId) =>
 
 export const searchListings = async (query) =>
   await axios.post(`${process.env.REACT_APP_API}/search-listings`, query);
+
+export const sendEmail = async (data) =>
+  await axios.post(`${process.env.REACT_APP_API}/send-email`, data);

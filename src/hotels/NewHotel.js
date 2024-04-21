@@ -29,6 +29,7 @@ const NewHotel = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log("IMAGE==>", typeof(image));
     const requiredFields = {
       image: "Image is required",
       title: "Title is required",
@@ -59,7 +60,6 @@ const NewHotel = () => {
     hotelData.append("bed", bed);
 
     console.log([...hotelData]);
-
     let res = await createHotel(token, hotelData);
     console.log("HOTEL CREATE RES", res);
     toast.success("New hotel is posted");
