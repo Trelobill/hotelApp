@@ -6,6 +6,9 @@ export const register = async (user) =>
 export const login = async (user) =>
   await axios.post(`${process.env.REACT_APP_API}/login`, user);
 
+export const checkIfUser = async (user) =>
+  await axios.post(`${process.env.REACT_APP_API}/checkIfUser`, user);
+
 //update user in local storage
 export const updateUserInLocalStorage = (user, next) => {
   if (window.localStorage.getItem("auth")) {
@@ -15,4 +18,3 @@ export const updateUserInLocalStorage = (user, next) => {
     next();
   }
 };
-

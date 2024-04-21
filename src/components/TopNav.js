@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { gapi } from "gapi-script";
 
 const TopNav = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,16 @@ const TopNav = () => {
       payload: null,
     });
     window.localStorage.removeItem("auth");
+
+    const auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(() => {
+      // Successfully signed out
+      // Clear authentication state
+      auth2.disconnect();
+    }).catch((error) => {
+      console.error('Sign out error:', error);
+    });
+
     navigate("/login");
   };
 
